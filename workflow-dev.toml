@@ -1,0 +1,26 @@
+[tasks.format]
+install_crate = "rustfmt"
+command = "cargo"
+args = ["fmt", "--all"]
+
+[tasks.clippy]
+install_crate = "clippy"
+command = "cargo"
+args = ["clippy", "--all-targets", "--no-deps", "--", "-D", "warnings"]
+
+[tasks.cargo-sort]
+install_crate = "cargo-sort"
+command = "cargo"
+args = ["sort"]
+
+[tasks.test]
+command = "cargo"
+args = ["test"]
+
+[tasks.workflow-dev]
+dependencies = [
+    "format",
+    "clippy",
+    "cargo-sort",
+    "test",
+]
