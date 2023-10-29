@@ -6,20 +6,15 @@ authors = ["Yurii Khomych"]
 
 [dependencies]
 alloy-rlp = { version = "0.3", features = ["derive", "arrayvec"] }
-
-## async
 async-trait = "0.1.68"
 eyre = "0.6"
 futures = "0.3.26"
 futures-util = "0.3.25"
+measure_time = "0.8.2"
 pin-project = "1.0.12"
-
-# crypto
 rand = "0.8.5"
 reth-ecies = { git = "https://github.com/paradigmxyz/reth", package = "reth-ecies" }
 reth-eth-wire = { git = "https://github.com/paradigmxyz/reth", package = "reth-eth-wire" }
-
-# ethereum
 reth-primitives = { git = "https://github.com/paradigmxyz/reth", package = "reth-primitives" }
 secp256k1 = { version = "0.27.0", default-features = false, features = [
     "global-context",
