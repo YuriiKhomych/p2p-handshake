@@ -6,7 +6,7 @@ use std::{net::IpAddr, time::Duration};
 use tokio::net::TcpStream;
 use tracing::instrument;
 
-use crate::p2p::eth::utils::create_hello_msg;
+use crate::p2p::{error::P2PError, eth::utils::create_hello_msg};
 
 mod constants;
 mod stream;
@@ -21,7 +21,7 @@ pub struct Config {
 
 /// Perform a P2P handshake with a peer
 #[instrument(level = "trace", skip_all, fields(peer=&*format!("{:?}", config.peer.address)))]
-pub async fn handshake(config: Config) -> eyre::Result<IpAddr> {
+pub async fn handshake(config: Config) -> Result<IpAddr, P2PError> {
     info_time!("[{:?}] Perform a P2P handshake", config.peer.address);
 
     let key = SecretKey::new(&mut rand::thread_rng());
