@@ -7,6 +7,7 @@ authors = ["Yurii Khomych"]
 [dependencies]
 alloy-rlp = { version = "0.3", features = ["derive", "arrayvec"] }
 async-trait = "0.1.68"
+clap = { version = "4.0.26", features = ["derive"] }
 eyre = "0.6"
 futures = "0.3.26"
 futures-util = "0.3.25"

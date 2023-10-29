@@ -1,20 +1,17 @@
+use clap::Parser;
 use p2p_handshake::{
-    p2p::eth::{self, HANDSHAKE_TIMEOUT},
+    p2p::{config::Config, handshake},
     telemetry::init_tracing,
 };
-use reth_primitives::holesky_nodes;
 
 #[tokio::main]
 async fn main() -> eyre::Result<()> {
+    // Initialize tracing
     init_tracing();
 
-    let nodes_addrs = holesky_nodes();
-    for node in nodes_addrs {
-        let _ = eth::handshake(eth::Config {
-            timeout: HANDSHAKE_TIMEOUT,
-            peer: node,
-        })
-        .await;
-    }
+    // Parse the CLI arguments and perform the P2P handshake for corresponding network
+    let config = Config::parse();
+    handshake(config).await?;
+
     Ok(())
 }
