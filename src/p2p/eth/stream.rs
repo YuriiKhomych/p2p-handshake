@@ -126,7 +126,7 @@ where
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::p2p::eth::{constants::HANDSHAKE_TIMEOUT, utils::create_hello_msg};
+    use crate::p2p::eth::utils::create_hello_msg;
     use reth_eth_wire::DisconnectReason;
     use secp256k1::SecretKey;
     use tokio::net::{TcpListener, TcpStream};
@@ -147,7 +147,7 @@ mod tests {
 
             // Confirm that the handshake is successful
             let p2p_stream = P2PStream::new(stream);
-            match p2p_stream.handshake(server_hello, HANDSHAKE_TIMEOUT).await {
+            match p2p_stream.handshake(server_hello, 10).await {
                 Ok(_) => (),
                 Err(e) => panic!("unexpected err: {e}"),
             }
@@ -161,7 +161,7 @@ mod tests {
 
         // Confirm that the handshake is successful
         let p2p_stream = P2PStream::new(sink);
-        match p2p_stream.handshake(client_hello, HANDSHAKE_TIMEOUT).await {
+        match p2p_stream.handshake(client_hello, 10).await {
             Ok(_) => (),
             Err(e) => panic!("unexpected err: {e}"),
         }
@@ -184,7 +184,7 @@ mod tests {
 
         // Confirm that the handshake times out
         let p2p_stream = P2PStream::new(sink);
-        match p2p_stream.handshake(client_hello, HANDSHAKE_TIMEOUT).await {
+        match p2p_stream.handshake(client_hello, 10).await {
             Ok(_) => panic!("expected handshake to fail, instead got a success"),
             Err(P2PStreamError::HandshakeError(P2PHandshakeError::Timeout)) => (),
             Err(other_err) => panic!("expected timeout error, got {other_err:?}"),
@@ -217,10 +217,7 @@ mod tests {
 
         // Confirm that the handshake fails
         let p2p_stream = P2PStream::new(sink);
-        match p2p_stream
-            .handshake(client_hello.clone(), HANDSHAKE_TIMEOUT)
-            .await
-        {
+        match p2p_stream.handshake(client_hello.clone(), 10).await {
             Ok(_) => panic!("expected handshake to fail, instead got a success"),
             Err(P2PStreamError::HandshakeError(P2PHandshakeError::Disconnected(reason))) => {
                 assert_eq!(reason, DisconnectReason::UselessPeer);

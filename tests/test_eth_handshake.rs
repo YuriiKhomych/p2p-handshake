@@ -1,4 +1,7 @@
-use p2p_handshake::p2p::eth::{handshake, Config, HANDSHAKE_TIMEOUT};
+use p2p_handshake::p2p::{
+    config::HANDSHAKE_TIMEOUT,
+    eth::{handshake, Config},
+};
 use reth_primitives::holesky_nodes;
 
 #[tokio::test]

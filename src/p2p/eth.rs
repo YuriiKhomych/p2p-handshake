@@ -12,8 +12,6 @@ mod constants;
 mod stream;
 mod utils;
 
-pub use constants::HANDSHAKE_TIMEOUT;
-
 pub struct Config {
     pub timeout: u64,
     pub peer: NodeRecord,
