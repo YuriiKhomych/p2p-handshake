@@ -4,7 +4,7 @@ use crate::p2p::commands::Commands;
 
 /// [`HANDSHAKE_TIMEOUT`] determines the amount of time to wait before determining that a `p2p`
 /// handshake has timed out.
-pub const HANDSHAKE_TIMEOUT: u64 = 500;
+pub const HANDSHAKE_TIMEOUT: u64 = 1000;
 
 #[derive(Parser, Debug)]
 #[command(version)]

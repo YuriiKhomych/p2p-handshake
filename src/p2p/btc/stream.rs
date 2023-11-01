@@ -66,7 +66,7 @@ mod tests {
     use tokio::net::{TcpListener, TcpStream};
 
     #[tokio::test]
-    async fn test_successful_handshake() {
+    async fn test_handshake_passthrough() {
         let addr = SocketAddr::new(IpAddr::V4(Ipv4Addr::new(0, 0, 0, 0)), 0);
         let listener = TcpListener::bind(addr).await.unwrap();
         let addr = listener.local_addr().unwrap(); // let node_address = "127.0.0.1:0".to_string();
