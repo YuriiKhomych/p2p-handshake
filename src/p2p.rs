@@ -6,6 +6,7 @@ use tracing::{error, info};
 
 use crate::p2p::{commands::Commands, config::Config, error::P2PError};
 
+pub mod btc;
 mod commands;
 pub mod config;
 pub mod error;
@@ -26,6 +27,27 @@ pub async fn handshake(config: Config) -> Result<(), eyre::ErrReport> {
                         P2PError::P2PHandshakeError(error::P2PHandshake::new(
                             err,
                             node.address.clone().to_string(),
+                        ))
+                    }),
+                )
+            })
+            .collect(),
+        Commands::Btc {
+            nodes_addrs,
+            user_agent,
+        } => nodes_addrs
+            .into_iter()
+            .map(|node_address| {
+                tokio::spawn(
+                    btc::handshake(btc::Config {
+                        timeout: config.timeout,
+                        node_address,
+                        user_agent: user_agent.clone(),
+                    })
+                    .map_err(move |err| {
+                        P2PError::P2PHandshakeError(error::P2PHandshake::new(
+                            err,
+                            node_address.to_string(),
                         ))
                     }),
                 )

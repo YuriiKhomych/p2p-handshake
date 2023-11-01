@@ -7,6 +7,8 @@ authors = ["Yurii Khomych"]
 [dependencies]
 alloy-rlp = { version = "0.3", features = ["derive", "arrayvec"] }
 async-trait = "0.1.68"
+bitcoin = "0.31.0"
+bytes = "1.5.0"
 clap = { version = "4.0.26", features = ["derive"] }
 eyre = "0.6"
 futures = "0.3.26"
@@ -25,8 +27,6 @@ secp256k1 = { version = "0.27.0", default-features = false, features = [
 thiserror = "1.0.50"
 tokio = { version = "1.21", features = ["full"] }
 tokio-stream = "0.1.11"
+tokio-util = "0.7"
 tracing = "0.1.0"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
-
-[dev-dependencies]
-tokio-util = "0.7"
